@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form - No JavaScript</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        form {
+            background: white;
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        fieldset {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 24px;
+            margin-bottom: 24px;
+            display: grid;
+            gap: 20px;
+        }
+
+        legend {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #333;
+            padding: 0 12px;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .required {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        output {
+            display: block;
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        output[name="errors"]:not(:empty) {
+            background-color: #f8d7da;
+            border: 1px solid #f5c2c7;
+            color: #842029;
+        }
+
+        output[name="info"]:not(:empty) {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px 24px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 640px) {
+            form {
+                padding: 24px;
+            }
+
+            fieldset {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact Form</h1>
+
+    <form action="https://httpbin.org/post" method="POST">
+        <fieldset>
+            <legend>Contact Information</legend>
+
+            <label for="name">
+                Name <span class="required">*</span>
+            </label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">
+                Email <span class="required">*</span>
+            </label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">
+                Phone
+            </label>
+            <input type="tel" id="phone" name="phone">
+        </fieldset>
+
+        <fieldset>
+            <legend>Message Details</legend>
+
+            <label for="subject">
+                Subject
+            </label>
+            <input type="text" id="subject" name="subject">
+
+            <label for="comments">
+                Comments <span class="required">*</span>
+            </label>
+            <textarea id="comments" name="comments" required></textarea>
+        </fieldset>
+
+        <input type="hidden" name="possible_bot" value="true">
+
+        <output name="errors" id="errors"></output>
+        <output name="info" id="info"></output>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
