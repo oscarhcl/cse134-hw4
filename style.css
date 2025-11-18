@@ -43,6 +43,24 @@
     --animation-timing: ease-in-out;
 }
 
+[data-theme="dark"] {
+    --primary-color: #60a5fa;
+    --primary-color-fallback: #4a9eff;
+    --secondary-color: #34d399;
+    --secondary-color-fallback: #00cc88;
+    --text-primary: #f3f4f6;
+    --text-primary-fallback: #e0e0e0;
+    --text-secondary: #d1d5db;
+    --text-secondary-fallback: #b0b0b0;
+    --bg-primary: #111827;
+    --bg-primary-fallback: #1a1a1a;
+    --bg-secondary: #1f2937;
+    --bg-secondary-fallback: #2d2d2d;
+    --border-color: #374151;
+    --border-color-fallback: #404040;
+    --hover-bg-mixed: color-mix(in srgb, var(--bg-secondary) 90%, var(--primary-color) 10%);
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -884,3 +902,38 @@ figure img {
         font-size: 1em;
     }
 }
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 18px;
+    background-color: var(--bg-secondary, var(--bg-secondary-fallback));
+    color: var(--text-primary, var(--text-primary-fallback));
+    border: 2px solid var(--border-color, var(--border-color-fallback));
+    border-radius: var(--border-radius-md, var(--border-radius-md-fallback));
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 10000;
+    transition: all var(--animation-duration, 0.3s) var(--animation-timing, ease-in-out);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+    background-color: var(--primary-color, var(--primary-color-fallback));
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle:active {
+    transform: translateY(0);
+}
+
+body {
+    transition: background-color var(--animation-duration, 0.3s) var(--animation-timing, ease-in-out),
+                color var(--animation-duration, 0.3s) var(--animation-timing, ease-in-out);
+}
+

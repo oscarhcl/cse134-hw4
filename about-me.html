@@ -6,6 +6,42 @@
     <title>About Me - Oscar Hung</title>
     <link rel="icon" type="image/x-icon" href="icon.ico">
     <link rel="stylesheet" href="style.css">
+    <style>
+        @view-transition {
+            navigation: auto;
+        }
+
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 0.5s;
+        }
+
+        ::view-transition-old(root) {
+            animation-name: fade-out;
+        }
+
+        ::view-transition-new(root) {
+            animation-name: fade-in;
+        }
+
+        @keyframes fade-out {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -100,5 +136,57 @@
     <footer>
         <p>Copyright 2025 Oscar Hung Portfolio</p>
     </footer>
+    <script src="theme.js"></script>
+    <script>
+        if ('navigation' in window && 'currentEntry' in window.navigation) {
+            window.navigation.addEventListener('navigate', (event) => {
+                const toUrl = new URL(event.destination.url);
+
+                if (location.origin !== toUrl.origin || !event.canIntercept) return;
+
+                event.intercept({
+                    handler: async () => {
+                        const response = await fetch(toUrl.pathname);
+                        const html = await response.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        document.title = doc.title;
+                        document.body.innerHTML = doc.body.innerHTML;
+
+                        const script = document.createElement('script');
+                        script.src = 'theme.js';
+                        document.body.appendChild(script);
+                    }
+                });
+            });
+        } else {
+            document.querySelectorAll('a[href^="index.html"]').forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    e.preventDefault();
+
+                    if (!document.startViewTransition) {
+                        window.location = link.href;
+                        return;
+                    }
+
+                    document.startViewTransition(async () => {
+                        const response = await fetch(link.href);
+                        const html = await response.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        document.title = doc.title;
+                        document.body.innerHTML = doc.body.innerHTML;
+                        window.history.pushState({}, '', link.href);
+
+                        const script = document.createElement('script');
+                        script.src = 'theme.js';
+                        document.body.appendChild(script);
+                    });
+                });
+            });
+        }
+    </script>
 </body>
 </html>
