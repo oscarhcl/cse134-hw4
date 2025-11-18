@@ -1,5 +1,5 @@
 name = "cse134-hw4"
 compatibility_date = "2025-11-18"
 
-[site]
-bucket = "."
+[assets]
+directory = "."
